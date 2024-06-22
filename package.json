@@ -12,7 +12,7 @@
 		"text"
 	],
 	"main": "./main.js",
-	"version": "1.0.12",
+	"version": "1.0.0",
 	"author": "Toavina Andrianjatovo",
 	"scripts": {
 		"start": "electron-forge start",
