@@ -1,0 +1,26 @@
+name: Build
+on: [push, pull_request]
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@master
+              with:
+                  node-version: 20
+
+            # HACK: Workaround for appdmg not found in Python 3.12
+            - name: Install Python 3.11.4 (macOS only)
+              if: matrix.os == 'macos-latest'
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.11.4"
+
+            - name: install dependencies
+              run: npm ci
+            - name: build
+              run: npm run make

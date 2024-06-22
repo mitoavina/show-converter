@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+		<meta http-equiv="Content-Security-Policy" />
+		<link rel="stylesheet" href="styles.css" />
+
+		<title>ShowConverter</title>
+	</head>
+	<body>
+		<div class="body">
+			<div id="titlebar">
+				<div class="title">
+					<img
+						src="assets/icon.png"
+						alt="ShowConverter icon"
+						id="favicon"
+					/>
+					<h1>ShowConverter</h1>
+				</div>
+				<div class="actions">
+					<button id="minimize" aria-label="Minimize">-</button>
+					<button id="close" aria-label="Close">&times;</button>
+				</div>
+			</div>
+			<span id="appVersion"></span>
+			<button id="setting-button">⚙</button>
+			<!-- ! ONLY NEEDED IN DEVELOPMENT -->
+			<button id="toggle-dev-tools">🧰</button>
+			<style>
+				#toggle-dev-tools {
+					position: absolute;
+					bottom: 16px;
+					left: 40px;
+
+					font-size: 1.1rem;
+					font-weight: 900;
+					background-color: transparent;
+					padding: 0;
+					border-radius: 50%;
+					opacity: 0.4;
+					transition: all 200ms ease-in-out;
+				}
+
+				#toggle-dev-tools:hover {
+					opacity: 1;
+				}
+			</style>
+			<!-- ! END -->
+			<div class="container">
+				<div id="input-section">
+					<div id="folderInfo">Click here to select a folder</div>
+					<div id="folderAlert">
+						🚨 All convertible files in the folder will be
+						converted. 🚨
+					</div>
+				</div>
+				<div id="converter" class="disabled">
+					<button id="convertPropresenter">
+						Convert <strong>*.pro</strong> files
+					</button>
+					<button id="convertVideopsalm">
+						Convert <strong>*.vpc</strong> files
+					</button>
+				</div>
+				<div id="converted">
+					<div id="fileListPro" class="block">
+						<ul class="list"></ul>
+					</div>
+					<div id="fileListVpc" class="block">
+						<ul class="list"></ul>
+					</div>
+				</div>
+				<button id="openOutputFolder">Open Output Folder</button>
+			</div>
+			<div id="setting-modal" class="modal">
+				<!-- Modal content -->
+				<div class="modal-content">
+					<h2>Settings</h2>
+					<span id="close-modal">&times;</span>
+					<label
+						>Output folder: <span>( Click to change )</span>
+					</label>
+					<input
+						type="text"
+						id="output-folder-path"
+						placeholder="Output Folder"
+						readonly
+					/>
+					<button id="output-folder-apply-changes">Apply</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		window.addEventListener("DOMContentLoaded", () => {
+			window.electron.getAppVersion((event, appVersion) => {
+				document.querySelector("#appVersion").innerText = appVersion;
+			});
+			// Get the modalqwwqqqqqwqwq<wqw
+			let modal = document.querySelector("#setting-modal");
+			// Get the output folder path
+			window.electron.getSettings((event, settings) => {
+				document.querySelector("#output-folder-path").value =
+					settings.outputFolder;
+			});
+
+			// Open Dialog box when input-section is clicked
+			document.querySelector("#input-section").onclick = () => {
+				window.electron.openFolder();
+			};
+			document.querySelector("#convertPropresenter").onclick = () => {
+				window.electron.convertPropresenter();
+			};
+			document.querySelector("#convertVideopsalm").onclick = () => {
+				window.electron.convertVideopsalm();
+			};
+			document.querySelector("#openOutputFolder").onclick = () => {
+				window.electron.openOutputFolder();
+			};
+			document.querySelector("#minimize").onclick = () => {
+				window.electron.minimizeWindow();
+			};
+			document.querySelector("#close").onclick = () => {
+				window.electron.closeWindow();
+			};
+			document.querySelector("#setting-button").onclick = () => {
+				modal.classList.add("active");
+			};
+			document.querySelector("#toggle-dev-tools").onclick = () => {
+				window.electron.toggleDevTools();
+			};
+			document.querySelector("#output-folder-path").onclick = () => {
+				window.electron.setOutputFolder();
+			};
+			document.querySelector("#output-folder-apply-changes").onclick =
+				() => {
+					const newOutputFolder = document.querySelector(
+						"#output-folder-path"
+					).value;
+					console.log("Apply Changes", newOutputFolder);
+					window.electron.applyOutputFolder(newOutputFolder);
+				};
+
+			// When the user clicks on <span> (x), close the modal
+			document.querySelector("#close-modal").onclick = () => {
+				modal.classList.remove("active");
+				window.electron.refreshSettings();
+			};
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = (event) => {
+				if (event.target == modal) {
+					modal.classList.remove("active");
+					window.electron.refreshSettings();
+				}
+			};
+		});
+	</script>
+</html>

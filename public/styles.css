@@ -1,0 +1,392 @@
+:root {
+	font-size: 15px;
+}
+
+* {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: aliceblue;
+}
+
+body {
+	background-color: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 1rem;
+}
+.body {
+	width: 100%;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: #252525;
+	overflow: hidden;
+}
+
+button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 0.7rem 0.8rem;
+	cursor: pointer;
+	border-radius: 0.35rem;
+	font-size: 0.8rem;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+#titlebar {
+	-webkit-app-region: drag;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 16px;
+	align-items: center;
+	font-size: smaller;
+	font-weight: bolder;
+	background-color: #1515157e;
+	border-radius: 20px 20px 10px 10px;
+}
+
+#titlebar .title {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: min(0.45rem, 12px);
+}
+
+#titlebar h1 {
+	font-size: min(11px, 0.75rem);
+	text-align: center;
+}
+
+#favicon {
+	width: 15px;
+	object-fit: contain;
+}
+
+#titlebar .actions {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: end;
+}
+
+#titlebar button {
+	background-color: #353535;
+	color: rgba(0, 0, 0, 0);
+	width: 14px;
+	height: 14px;
+	max-width: 14px;
+	max-height: 14px;
+	padding: 0 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: min(0.6rem, 10px);
+	line-height: 0;
+	font-weight: 700;
+	transition: all 200ms ease-in-out;
+	-webkit-app-region: no-drag;
+}
+
+#titlebar button:hover {
+	color: rgba(0, 0, 0, 0.8);
+}
+
+#minimize:hover {
+	background-color: rgba(255, 255, 0, 0.8);
+}
+
+#close:hover {
+	background-color: rgba(255, 0, 0, 0.8);
+}
+
+#setting-button {
+	position: absolute;
+	bottom: 12px;
+	left: 16px;
+	/* right: 16px; */
+	color: white;
+	font-size: 1.2rem;
+	font-weight: 900;
+	background-color: transparent;
+	padding: 0;
+	border-radius: 50%;
+	opacity: 0.4;
+	transition: all 200ms ease-in-out;
+}
+
+#setting-button:hover {
+	opacity: 1;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	padding: 120px 32px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 12px;
+	width: 100%;
+	height: 100%;
+}
+
+#input-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	padding: 40px 32px;
+	border-radius: 12px;
+	border: 1.5px dashed #007bff;
+	margin-bottom: 20px;
+	transition: all 200ms ease-in-out;
+	background-color: #222222;
+	font-size: 1.1rem;
+	gap: 16px;
+	height: 140px;
+}
+
+#input-section:hover {
+	border-color: #0056b3;
+	background-color: #202020;
+	cursor: pointer;
+}
+
+#input-section #folderAlert {
+	color: #a1a1a1;
+	font-size: 0.8rem;
+	text-align: center;
+	transition: all 200ms ease-in-out;
+}
+
+#input-section:hover #folderAlert {
+	color: #888888;
+}
+
+#selectedFile {
+	margin-top: 10px;
+}
+
+#folderInfo {
+	font-weight: bold;
+	text-align: center;
+}
+
+.output-section {
+	margin-top: 20px;
+}
+
+#converter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+}
+
+#converted {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 80%;
+	gap: 8px;
+	margin-bottom: 20px;
+}
+
+#converter.disabled button {
+	background-color: gray;
+	/* cursor: not-allowed; */
+}
+#converter.disabled button:hover {
+	background-color: gray;
+}
+
+#converted .block {
+	flex: 1;
+	border: none;
+	display: none;
+	font-size: 0.9rem;
+}
+
+#converted .block:has(li) {
+	display: block;
+	flex: 1;
+	margin-top: 10px;
+	background-color: #202020;
+	border-radius: 6px;
+	max-height: 180px;
+	padding: 20px 12px;
+	overflow-y: auto;
+}
+
+#converted ul {
+	padding: 0 32px;
+	text-align: start;
+	font-size: 0.8rem;
+}
+
+#converted ul li {
+	font-family: Consolas, "Courier New", Courier, monospace;
+}
+#appVersion {
+	position: absolute;
+	bottom: 16px;
+	right: 24px;
+	font-size: 0.9rem;
+	font-weight: 800;
+	text-align: end;
+	color: #454545;
+	cursor: default;
+	user-select: none;
+}
+
+#appVersion:hover {
+	color: #888888;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	padding: 60px;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	backdrop-filter: blur(1px);
+}
+
+.modal.active {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: end;
+}
+
+.modal-content {
+	background-color: #282828;
+	padding: 20px;
+	width: fit-content;
+	min-width: 350px;
+	border-radius: 8px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: 8px;
+}
+
+.modal-content h2 {
+	font-size: 1rem;
+	font-weight: 900;
+	color: #aaa;
+	flex: 1;
+	width: 100%;
+	padding-bottom: 20px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-content label {
+	font-size: 0.8rem;
+	font-weight: 800;
+}
+
+.modal-content label span {
+	font-size: 0.7rem;
+	font-weight: normal;
+	opacity: 0.6;
+}
+
+#output-folder-path {
+	cursor: pointer;
+	flex: 1;
+	width: 100%;
+	padding: 4px 8px;
+	border-radius: 4px;
+	color: black;
+	border: none;
+	background-color: #f1f1f1;
+}
+
+#output-folder-path:focus {
+	outline: none;
+}
+
+#close-modal {
+	color: #aaa;
+	float: right;
+	position: absolute;
+	right: 18px;
+	top: 18px;
+	font-size: 28px;
+	font-weight: bold;
+	border-radius: 50%;
+}
+
+#close-modal:hover,
+#close-modal:focus {
+	color: rgba(255, 0, 0, 0.8);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#output-folder-apply-changes {
+	align-self: flex-end;
+	margin-top: 12px;
+	padding: 0.7rem 1.5rem;
+}
+/*  ------- SPLASHSCREEN -------  */
+#splashscreen * {
+	user-select: none;
+}
+#splashscreen .body {
+	background-color: rgba(0, 0, 0, 0.8);
+	gap: 12px;
+}
+
+#splashscreen img {
+	width: 120px;
+	margin-top: 36px;
+}
+
+#splashscreen h1 {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 1.7rem;
+}
+#splashscreen #appVersion {
+	position: relative;
+	text-align: center;
+	color: #888888;
+	margin-top: -4px;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	font-size: 0.8rem;
+	font-weight: 800;
+}

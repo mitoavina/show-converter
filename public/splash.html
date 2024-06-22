@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+		<meta http-equiv="Content-Security-Policy" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>ShowConverter</title>
+	</head>
+	<body id="splashscreen">
+		<div class="body">
+			<img src="assets/icon.png" alt="ShowConverter icon" id="favicon" />
+			<h1>ShowConverter</h1>
+			<span id="appVersion">version</span>
+		</div>
+	</body>
+	<script>
+		window.addEventListener("DOMContentLoaded", () => {
+			console.log("koko");
+			window.electron.getAppVersion((event, appVersion) => {
+				console.log(
+					"🚀 ~ window.electron.getAppVersion ~ appVersion:",
+					appVersion
+				);
+				document.querySelector("#appVersion").innerText = appVersion;
+			});
+		});
+	</script>
+</html>
